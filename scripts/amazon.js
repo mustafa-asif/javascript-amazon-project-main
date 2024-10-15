@@ -88,7 +88,17 @@ function RenderProductsLists(){
           });
         }
 
-        console.log(cart);
+
+        let cartQuantity=0;
+        cart.forEach((item) =>{
+          cartQuantity +=item.quantity;
+        });
+
+        const cartCount=document.getElementById('js-cart-quantity');
+        cartCount.innerHTML=cartQuantity;
+
+        // console.log(cartQuantity);
+        // console.log(cart);
       });
 
     });
