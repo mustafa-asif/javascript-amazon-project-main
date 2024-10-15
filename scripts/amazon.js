@@ -1,9 +1,6 @@
 
 const displayProducts =document.getElementById('js-products');
 // console.log(displayProducts);
-
-
-
 function RenderProductsLists(){
 
     let renderProductHtml ='';
@@ -55,15 +52,43 @@ function RenderProductsLists(){
             Added
           </div>
           
-          <button class="add-to-cart-button button-primary">
+          <button class="add-to-cart-button button-primary js-add-to-cart-btn" 
+          data-product-id="${products.id}" >
           Add to Cart
           </button>
-          </div>
-          
-          `;
+          </div> `;
         });
         // console.log(renderProductHtml);
         displayProducts.innerHTML=renderProductHtml;
     };
+   RenderProductsLists();
 
-    RenderProductsLists();
+   // adding products to cart to proceed for checkout (by addEventListener)
+
+   const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
+    // console.log(cartBtn);
+    cartBtn.forEach((button) =>{
+      button.addEventListener('click', () => {
+
+        const productId=button.dataset.productId;
+        let matchingItem;
+
+        cart.forEach((item) =>{
+          if(productId === item.productId){
+            matchingItem=item;
+          }
+        });
+
+        if(matchingItem){
+          matchingItem.quantity +=1;
+        }else{
+          cart.push({
+            productId,
+            quantity:1
+          });
+        }
+
+        console.log(cart);
+      });
+
+    });
