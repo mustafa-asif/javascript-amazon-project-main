@@ -125,23 +125,37 @@
 .product-quantity-container {
   margin-bottom: 17px;
 }
+.selectOption{
+  background: rgb(19, 25, 33);
+  border: none;
+  box-shadow: 5px 5px 5px black;
+  color: white;
+  padding: 5px;
+}
 
 .product-spacer {
   flex: 1;
 }
 
-.added-to-cart {
+.added-to-cart,.messageDisplay {
   color: rgb(6, 125, 98);
   font-size: 16px;
 
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  cursor: pointer;
 
   /* At first, the "Added to cart" message will
      be invisible. Use JavaScript to change the
      opacity and make it visible. */
   opacity: 0;
+  
+}
+.messageDisplay{
+  opacity: 1;
+  transition: 0.5s;
+
 }
 
 .added-to-cart img {

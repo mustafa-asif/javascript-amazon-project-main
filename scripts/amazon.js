@@ -1,7 +1,9 @@
 
-const displayProducts =document.getElementById('js-products');
-// console.log(displayProducts);
-function RenderProductsLists(){
+    const displayProducts =document.getElementById('js-products');
+    // console.log(displayProducts);
+
+
+    function RenderProductsLists(){
 
     let renderProductHtml ='';
     // console.log(productsData.length);
@@ -31,8 +33,8 @@ function RenderProductsLists(){
           </div>
           
           <div class="product-quantity-container">
-          <select>
-          <option selected value="1">1</option>
+          <select class="selectOption" id="${products.id}">
+          <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
@@ -47,7 +49,7 @@ function RenderProductsLists(){
 
           <div class="product-spacer"></div>
 
-          <div class="added-to-cart">
+          <div class="added-to-cart" id="-${products.id}">
             <img src="images/icons/checkmark.png">
             Added
           </div>
@@ -57,34 +59,54 @@ function RenderProductsLists(){
           Add to Cart
           </button>
           </div> `;
+          
         });
-        // console.log(renderProductHtml);
+        
         displayProducts.innerHTML=renderProductHtml;
-    };
-   RenderProductsLists();
+        
+      };
+      RenderProductsLists();
+      
+      // adding products to cart to proceed for checkout (by addEventListener)
+      
+      const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
+      
+      cartBtn.forEach((button) =>{
+        
+        button.addEventListener('click', () => {
+          
+          const productId=button.dataset.productId;
 
-   // adding products to cart to proceed for checkout (by addEventListener)
+          const message=document.getElementById(`-${productId}`);
+          setTimeout( ()=>{
+            message.classList.add("messageDisplay");
+            
+          },1000);
 
-   const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
-    // console.log(cartBtn);
-    cartBtn.forEach((button) =>{
-      button.addEventListener('click', () => {
+          setInterval( ()=>{
+            message.classList.remove("messageDisplay");
+          },2000);
+          
 
-        const productId=button.dataset.productId;
+        const itemQuantity=document.getElementById(`${productId}`);
+        const itemQuantityValue=Number(itemQuantity.value);
+        console.log(itemQuantityValue);
+      
         let matchingItem;
-
+        
         cart.forEach((item) =>{
+        
           if(productId === item.productId){
             matchingItem=item;
           }
         });
 
         if(matchingItem){
-          matchingItem.quantity +=1;
+          matchingItem.quantity +=itemQuantityValue;
         }else{
           cart.push({
             productId,
-            quantity:1
+            quantity:itemQuantityValue
           });
         }
 
@@ -94,8 +116,8 @@ function RenderProductsLists(){
           cartQuantity +=item.quantity;
         });
 
-        const cartCount=document.getElementById('js-cart-quantity');
-        cartCount.innerHTML=cartQuantity;
+        const cartTotalCount=document.getElementById('js-cart-quantity');
+        cartTotalCount.innerHTML=cartQuantity;
       });
 
     });
