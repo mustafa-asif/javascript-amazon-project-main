@@ -96,9 +96,6 @@ function RenderProductsLists(){
 
         const cartCount=document.getElementById('js-cart-quantity');
         cartCount.innerHTML=cartQuantity;
-
-        // console.log(cartQuantity);
-        // console.log(cart);
       });
 
     });
