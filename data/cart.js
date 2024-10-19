@@ -1,3 +1,5 @@
+// import { RenderCart } from "../scripts/amazon.js";
+
 export let cart= JSON.parse(localStorage.getItem('cart'));
 if(!cart){
  cart= [
@@ -13,6 +15,13 @@ if(!cart){
   ];
 }
 
+export  function RenderCart(){
+  let cartQuantity=0;
+  cart.forEach((item) =>{
+    cartQuantity +=item.quantity;
+  });
+  return cartQuantity; 
+};
 
 function SaveCartStorage() {
   // save cart to local storage
@@ -39,6 +48,7 @@ export   function  AddToCart(productId) {
       quantity:itemQuantityValue
     });
   }
+  // RenderCart();
   SaveCartStorage();
 
 };

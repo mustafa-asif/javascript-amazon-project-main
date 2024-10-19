@@ -1,8 +1,11 @@
 import {cart,AddToCart} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
+import { RenderCart } from '../data/cart.js';
 
 const displayProducts =document.getElementById('js-products');
+const cartTotalCount=document.getElementById('js-cart-quantity');
+
 // console.log(displayProducts);
 
 
@@ -84,16 +87,8 @@ function RenderProductsLists(){
   };
 
   // display cart items 
-  function RenderCart(){
-    let cartQuantity=0;
-    cart.forEach((item) =>{
-      cartQuantity +=item.quantity;
-    });
-
-    const cartTotalCount=document.getElementById('js-cart-quantity');
-    cartTotalCount.innerHTML=cartQuantity;
-    
-  };
+ 
+  cartTotalCount.innerHTML= RenderCart();
 
   
   const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
@@ -105,7 +100,7 @@ function RenderProductsLists(){
       const productId=button.dataset.productId;
       AddToCart(productId);
       MessageDisplay(productId);
-      RenderCart();
+      cartTotalCount.innerHTML=RenderCart();
       
     
   });

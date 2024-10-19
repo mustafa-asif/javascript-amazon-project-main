@@ -1,8 +1,12 @@
 import {cart,RemoveCartItem} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
+import { RenderCart } from '../data/cart.js';
+
 
 let renderOrder=document.getElementById('js-render-order');
+const quantity=document.getElementById('checkout-quantity');
+
 
 
 function renderOrderSummary() {
@@ -98,6 +102,9 @@ function renderOrderSummary() {
     orderSummary +=orderGenerating;
   });
     renderOrder.innerHTML=orderSummary;
+    quantity.innerHTML=`${RenderCart()} items`;
+
+    // quantity.innerHTML=RenderCart();
 };
 
 renderOrderSummary();
@@ -109,8 +116,16 @@ const deleteItem=document.querySelectorAll('.js-product-delete');
     RemoveCartItem(productId);
     const container=document.getElementById(`js-cart-${productId}`);
     container.remove();
+   quantity.innerHTML=`${RenderCart()} items`;
     
   });
  }));
+
+
+
+ 
+
+
+ 
 
 // console.log(orderSummary);
