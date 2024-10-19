@@ -18,7 +18,8 @@ function renderOrderSummary() {
     });
 
   const orderGenerating = `
-  <div class="cart-item-container">
+  <div class="cart-item-container "
+  id="js-cart-${matchingProduct.id}">
     <div class="delivery-date">
         Delivery date: 
     </div>
@@ -106,7 +107,9 @@ const deleteItem=document.querySelectorAll('.js-product-delete');
   link.addEventListener('click',()=>{
     const productId=link.dataset.productId;
     RemoveCartItem(productId);
-    console.log(cart); 
+    const container=document.getElementById(`js-cart-${productId}`);
+    container.remove();
+    
   });
  }));
 
