@@ -1,4 +1,6 @@
 import {cart} from '../data/cart.js';
+import { productsData } from '../data/productsData.js';
+
 const displayProducts =document.getElementById('js-products');
 // console.log(displayProducts);
 
