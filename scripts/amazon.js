@@ -1,4 +1,4 @@
-import {cart} from '../data/cart.js';
+import {cart,AddToCart} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
 
 const displayProducts =document.getElementById('js-products');
@@ -69,7 +69,31 @@ function RenderProductsLists(){
   };
   RenderProductsLists();
   
-  // adding products to cart to proceed for checkout (by addEventListener)
+// display added message once item is added in cart
+  function MessageDisplay(productId){
+    const message=document.getElementById(`-${productId}`);
+    setTimeout( ()=>{
+      message.classList.add("messageDisplay");
+      
+    },500);
+
+    setInterval( ()=>{
+      message.classList.remove("messageDisplay");
+    },3000);
+  };
+
+  // display cart items 
+  function RenderCart(){
+    let cartQuantity=0;
+    cart.forEach((item) =>{
+      cartQuantity +=item.quantity;
+    });
+
+    const cartTotalCount=document.getElementById('js-cart-quantity');
+    cartTotalCount.innerHTML=cartQuantity;
+    
+  };
+
   
   const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
   
@@ -78,49 +102,11 @@ function RenderProductsLists(){
     button.addEventListener('click', () => {
       
       const productId=button.dataset.productId;
-
-      const message=document.getElementById(`-${productId}`);
-      setTimeout( ()=>{
-        message.classList.add("messageDisplay");
-        
-      },500);
-
-      setInterval( ()=>{
-        message.classList.remove("messageDisplay");
-      },3000);
+      AddToCart(productId);
+      MessageDisplay(productId);
+      RenderCart();
       
-
-
-    const itemQuantity=document.getElementById(`${productId}`);
-    const itemQuantityValue=Number(itemQuantity.value);
     
-  
-    let matchingItem;
-    
-    cart.forEach((item) =>{
-    
-      if(productId === item.productId){
-        matchingItem=item;
-      }
-    });
-
-    if(matchingItem){
-      matchingItem.quantity +=itemQuantityValue;
-    }else{
-      cart.push({
-        productId,
-        quantity:itemQuantityValue
-      });
-    }
-
-
-    let cartQuantity=0;
-    cart.forEach((item) =>{
-      cartQuantity +=item.quantity;
-    });
-
-    const cartTotalCount=document.getElementById('js-cart-quantity');
-    cartTotalCount.innerHTML=cartQuantity;
   });
 
 });
