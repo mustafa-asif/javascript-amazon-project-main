@@ -1,5 +1,6 @@
 import {cart,AddToCart} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
+import { FormatCurrrency } from './util/money.js';
 
 const displayProducts =document.getElementById('js-products');
 // console.log(displayProducts);
@@ -31,7 +32,7 @@ function RenderProductsLists(){
             </div>
 
             <div class="product-price">
-              $${(products.priceCents / 100).toFixed(2)}
+              $${FormatCurrrency(products.priceCents)}
             </div>
             
             <div class="product-quantity-container">
