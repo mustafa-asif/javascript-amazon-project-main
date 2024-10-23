@@ -1,11 +1,11 @@
-import {cart,RemoveCartItem} from '../data/cart.js';
+import {cart,RemoveCartItem,updateCartQuanity,SaveCartStorage} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
 import { RenderCart } from '../data/cart.js';
 
 
 let renderOrder=document.getElementById('js-render-order');
-const quantity=document.getElementById('checkout-quantity');
+const checkoutQuantity=document.getElementById('checkout-quantity');
 
 
 
@@ -42,10 +42,17 @@ function renderOrderSummary() {
           </div>
           <div class="product-quantity">
             <span>
-              Quantity: <span class="quantity-label">${cartItem.quantity}</span>
+              Quantity: <span id="js-value-${matchingProduct.id}" data-product-id=${matchingProduct.id} class="quantity-label-${matchingProduct.id}">${cartItem.quantity}</span>
             </span>
-            <span class="update-quantity-link link-primary">
+            <span class="update-quantity-link link-primary js-product-update" data-product-id="${matchingProduct.id}">
               Update
+            </span>
+            
+            
+            <input type="number" max=10 min=0 name="" id="input-value-${matchingProduct.id}" class="quantity-input">
+            <span class="save-quantity-link link-primary js-product-save" data-product-id=${matchingProduct.id}>
+             
+              Save
             </span>
             <span class="delete-quantity-link link-primary js-product-delete" data-product-id="${matchingProduct.id}">
               Delete
@@ -102,28 +109,84 @@ function renderOrderSummary() {
     orderSummary +=orderGenerating;
   });
     renderOrder.innerHTML=orderSummary;
-    quantity.innerHTML=`${RenderCart()} items`;
+    checkoutQuantity.innerHTML=`${RenderCart()} items`;
 
     // quantity.innerHTML=RenderCart();
 };
 
 renderOrderSummary();
 
-const deleteItem=document.querySelectorAll('.js-product-delete');
- deleteItem.forEach((link =>{
+// Deleting items from checkout
+function Deleteitem(){
+
+  const deleteItem=document.querySelectorAll('.js-product-delete');
+  deleteItem.forEach((link =>{
+    link.addEventListener('click',()=>{
+      const productId=link.dataset.productId;
+      RemoveCartItem(productId);
+      const container=document.getElementById(`js-cart-${productId}`);
+      container.remove();
+      checkoutQuantity.innerHTML=`${RenderCart()} items`;
+      
+    });
+  }));
+};
+
+Deleteitem();
+
+ function UpdatingQuantity(){
+
+   // updating items in cart
+   const updateItem=document.querySelectorAll('.js-product-update');
+   //  console.log(updateItem);
+   updateItem.forEach((link) =>{
+     link.addEventListener('click',()=>{
+       const productId=link.dataset.productId;
+       // console.log(productId);
+       const container=document.getElementById(`js-cart-${productId}`);
+       container.classList.add("is-editing-quantity");
+      });
+    });
+  };
+  UpdatingQuantity();
+
+
+//  saving  updated quantity and rendering on checkout items too
+function SavingUpdatedQuantity(){
+
+  const saveItem=document.querySelectorAll('.js-product-save');
+  
+saveItem.forEach((link) =>{
   link.addEventListener('click',()=>{
     const productId=link.dataset.productId;
-    RemoveCartItem(productId);
-    const container=document.getElementById(`js-cart-${productId}`);
-    container.remove();
-   quantity.innerHTML=`${RenderCart()} items`;
     
+    const container=document.getElementById(`js-cart-${productId}`);
+    container.classList.remove("is-editing-quantity");
+    const quantityInput=document.getElementById(`input-value-${productId}`);
+    
+    const quantityValue=Number(quantityInput.value);
+    
+    
+    let changeQuantity=document.querySelector(`.quantity-label-${productId}`);
+    
+    
+    console.log(changeQuantity);
+    
+    changeQuantity.innerHTML=updateCartQuanity(productId,quantityValue);
+    checkoutQuantity.innerHTML=`${RenderCart()} items`;
+    if(quantityValue ===0){
+      container.remove();
+      SaveCartStorage();
+     }
+   });
   });
- }));
+};
+
+SavingUpdatedQuantity();
 
 
 
- 
+
 
 
  

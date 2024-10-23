@@ -19,11 +19,13 @@ export  function RenderCart(){
   let cartQuantity=0;
   cart.forEach((item) =>{
     cartQuantity +=item.quantity;
+    // updateCartQuanity(item.productId,cartQuantity);
   });
+  SaveCartStorage();
   return cartQuantity; 
 };
 
-function SaveCartStorage() {
+ export function SaveCartStorage() {
   // save cart to local storage
   localStorage.setItem('cart', JSON.stringify(cart));
 };
@@ -49,6 +51,7 @@ export   function  AddToCart(productId) {
     });
   }
   // RenderCart();
+  // updateCartQuanity(productId,itemQuantityValue);
   SaveCartStorage();
 
 };
@@ -63,3 +66,14 @@ export   function  AddToCart(productId) {
 });
 SaveCartStorage();
 };
+
+export function updateCartQuanity(productId,newQuantity){
+  //  let updatedQuanity=newQuantity;
+  cart.forEach((item)=>{
+    if(item.productId === productId){
+      item.quantity =newQuantity;
+    }
+  })
+  SaveCartStorage();
+  return newQuantity;
+}
