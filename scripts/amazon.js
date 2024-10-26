@@ -1,7 +1,7 @@
-import {cart,AddToCart} from '../data/cart.js';
+import {AddToCart,RenderCart} from '../data/cart.js';
 import { productsData } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
-import { RenderCart } from '../data/cart.js';
+
 
 const displayProducts =document.getElementById('js-products');
 const cartTotalCount=document.getElementById('js-cart-quantity');
