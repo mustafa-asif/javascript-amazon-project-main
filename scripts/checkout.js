@@ -13,14 +13,14 @@ const checkoutQuantity=document.getElementById('checkout-quantity');
 // const delieveryDate=todaysDate.add(7,'day');
 // console.log(delieveryDate.format('dddd, MMMM DD'));
 
+// render all functions
 function  renderOrderSummaryAll() {
-  console.log('hell');
+  
   renderOrderSummary();
-  // generateOptions();
   DeleteItem();
   UpdatingQuantity();
   SavingUpdatedQuantity();
-
+  renderUpdatedDelieveryOptions();
 };
 
 
@@ -32,25 +32,24 @@ function renderOrderSummary() {
     productsData.forEach((products)=>{
       if(products.id === productId){
         matchingProduct = products;
-        // AddToCart(productId);
+        
       }
     });
 
     const deliverOptionId = cartItem.delieveryOptionsId;
-    console.log(deliverOptionId);
+    
      let deliveryOption;
      let dateFormat;
      delieveryOptions.forEach((option)=>{
       if(option.id === deliverOptionId){
         deliveryOption = option;
-        // console.log(deliveryOption);
       }
     });
       const today=dayjs();
       let deliveryDate=today.add(
         deliveryOption.delieveryDays,'days'
       );
-      // console.log(deliveryDate);
+      
       const dateString=deliveryDate.format('dddd, MMMM DD');
       dateFormat=dateString;
 
@@ -112,10 +111,10 @@ function renderOrderSummary() {
     renderOrder.innerHTML=orderSummary;
     checkoutQuantity.innerHTML=`${RenderCart()} items`;
 
-    // quantity.innerHTML=RenderCart();
+    
 };
 
-// renderOrderSummary();
+
 
 // function for generarting options
 function generateOptions(matchingProduct,cartItem){
@@ -132,7 +131,7 @@ function generateOptions(matchingProduct,cartItem){
     : `$${FormatCurrrency(option.priceCents)} - `;
 
     const isChecked = option.id === cartItem.delieveryOptionsId;
-    // console.log(isChecked);
+    
 
     const optionHtml = ` 
     <div class="delivery-option">
@@ -174,7 +173,7 @@ function DeleteItem(){
   }));
 };
 
-// DeleteItem();
+
 
  function UpdatingQuantity(){
 
@@ -190,7 +189,7 @@ function DeleteItem(){
       });
     });
   };
-  // UpdatingQuantity();
+  
 
 
   //  saving  updated quantity and rendering on checkout items too
@@ -212,31 +211,34 @@ function DeleteItem(){
     let changeQuantity=document.querySelector(`.quantity-label-${productId}`);
     
     
-    console.log(changeQuantity);
-    
     changeQuantity.innerHTML=updateCartQuanity(productId,quantityValue);
     checkoutQuantity.innerHTML=`${RenderCart()} items`;
     if(quantityValue ===0){
       container.remove();
-      // SaveCartStorage();
+      
      }
    });
   });
 };
 
-// SavingUpdatedQuantity();
 
-const deliveryElement=document.querySelectorAll('.js-delivery-option');
-deliveryElement.forEach((element)=>{
-  element.addEventListener('click',()=>{
-    const {deliveryId,productId}=element.dataset;
-    updateDeliveryOptions(productId,deliveryId);
-    // renderOrderSummaryAll();
-  })
 
-});
 
-// renderOrderSummaryAll();
+renderOrderSummaryAll();
+
+function renderUpdatedDelieveryOptions (){
+
+  const deliveryElement=document.querySelectorAll('.js-delivery-option');
+  deliveryElement.forEach((element)=>{
+    element.addEventListener('click',()=>{
+      const {deliveryId,productId}=element.dataset;
+      updateDeliveryOptions(productId,deliveryId);
+      renderOrderSummaryAll();
+      
+    })
+    
+  });
+};
 
 
 
