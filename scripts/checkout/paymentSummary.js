@@ -1,4 +1,4 @@
-import { cart } from "../../data/cart.js";
+import { cart, RenderCart } from "../../data/cart.js";
 import { getDelieveryOption } from "../../data/delieveryOptions.js";
 import { getProduct } from "../../data/productsData.js";
 import { FormatCurrrency } from "../util/money.js";
@@ -26,7 +26,7 @@ export function renderPaymentSummary(){
           </div>
 
           <div class="payment-summary-row">
-            <div>Items (3):</div>
+            <div>Items (${RenderCart()}):</div>
             <div class="payment-summary-money">
             $${FormatCurrrency(productPriceCents)}
             </div>
