@@ -17,7 +17,11 @@ if(!cart){
     }
   ];
 }
-
+// function CartGrid(){
+//   RenderCart();
+//   SaveCartStorage();
+  
+// }
 export  function RenderCart(){
   let cartQuantity=0;
   cart.forEach((item) =>{

@@ -1,5 +1,5 @@
 import {AddToCart,RenderCart} from '../data/cart.js';
-import { productsData } from '../data/productsData.js';
+import { productsData,loadProducts } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
 
 
@@ -8,8 +8,14 @@ const cartTotalCount=document.getElementById('js-cart-quantity');
 
 // console.log(displayProducts);
 
+ await loadProducts(RenderProductsGrid);
 
+ function RenderProductsGrid(){
+  RenderProductsLists();
+  DisplayCartItem();
+}
 function RenderProductsLists(){
+  
 
       let renderProductHtml ='';
       // console.log(productsData.length);
@@ -71,7 +77,7 @@ function RenderProductsLists(){
           displayProducts.innerHTML=renderProductHtml;
     
   };
-  RenderProductsLists();
+  // RenderProductsLists();
   
 // display added message once item is added in cart
   function MessageDisplay(productId){
@@ -87,22 +93,28 @@ function RenderProductsLists(){
   };
 
   // display cart items 
- 
-  cartTotalCount.innerHTML= RenderCart();
+ function DisplayCartItem(){
 
-  
-  const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
-  
-  cartBtn.forEach((button) =>{
-    
-    button.addEventListener('click', () => {
+   cartTotalCount.innerHTML= RenderCart();
+   
+   
+   const cartBtn=document.querySelectorAll('.js-add-to-cart-btn');
+   
+   cartBtn.forEach((button) =>{
+     
+     button.addEventListener('click', () => {
+       
+       const productId=button.dataset.productId;
+       AddToCart(productId);
+       MessageDisplay(productId);
+       cartTotalCount.innerHTML=RenderCart();
+       
+       
+      });
       
-      const productId=button.dataset.productId;
-      AddToCart(productId);
-      MessageDisplay(productId);
-      cartTotalCount.innerHTML=RenderCart();
-      
-    
-  });
+    });
+  };
 
-});
+  RenderProductsGrid();
+
+  // DisplayCartItem();

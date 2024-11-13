@@ -1,5 +1,5 @@
 import {cart,RemoveCartItem,updateCartQuanity,SaveCartStorage,updateDeliveryOptions} from '../../data/cart.js';
-import { getProduct, productsData } from '../../data/productsData.js';
+import { getProduct } from '../../data/productsData.js';
 import { FormatCurrrency } from '../util/money.js';
 import { RenderCart } from '../../data/cart.js';
 import {renderPaymentSummary} from './paymentSummary.js';
@@ -14,6 +14,7 @@ const checkoutQuantity=document.getElementById('checkout-quantity');
 // const delieveryDate=todaysDate.add(7,'day');
 // console.log(delieveryDate.format('dddd, MMMM DD'));
 
+// loadProducts();
 // render all functions
   export function  renderOrderSummaryAll() {
   
@@ -29,7 +30,10 @@ function renderOrderSummary() {
   let orderSummary='';
     cart.forEach( (cartItem)=>{
       const productId=cartItem.productId;
+      // console.log(cartItem.productId);
+      // console.log(productId);
       const  matchingProduct =getProduct(productId);
+      // console.log(matchingProduct);
       
   
 
