@@ -17,24 +17,32 @@ export async function loadProducts(callback) {
         productsData.push(value);
       }
     });
-    
-    callback();
-    console.log(productsData);
    
+    
+    console.log('load products');
+    // console.log(productsData);
+    callback()
+    
   } catch (error) {
     console.error('Failed to load products:', error);
   }
 };
 
-await loadProducts(()=>{
-  productsData;
-  // callback();
-})
+await loadProducts(()=>{});
 
 
-
-export function getProduct(productId){
-  let matchingProduct;
+// new Promise((resolve)=>{
+  //   loadProducts(()=>{
+    //     productsData;
+    //     resolve();
+    //   })
+    // });
+    
+    
+    
+    export  function getProduct(productId){
+     
+      let matchingProduct;
   
   
   // console.log(productsData.id);

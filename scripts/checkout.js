@@ -3,8 +3,21 @@
  import { loadProducts } from "../data/productsData.js";
 //  import '../data/backend-practice.js';
 
-loadProducts(()=>{
+new Promise((resolve)=>{
+  console.log("start promise");
+  loadProducts(()=>{
+    console.log('finished loading');
+   
+    resolve();
+  })
+}).then(()=>{
+  console.log('next step');
   renderOrderSummaryAll();
   renderPaymentSummary();
 })
+
+// loadProducts(()=>{
+//   renderOrderSummaryAll();
+//   renderPaymentSummary();
+// })
 
