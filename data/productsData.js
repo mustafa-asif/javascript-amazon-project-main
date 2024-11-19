@@ -1,51 +1,34 @@
 
 export const productsData = []; // Declare productsData in the global scope
 
-export async function loadProducts(callback) {
+export  function loadProductsFetch() {
   try {
     
-    const response = await fetch('https://supersimplebackend.dev/products');
-    if (!response.ok) {
-      throw new Error(`HTTP error! Status: ${response.status}`);
-    }
-    const values = await response.json();
-    
-        
-    // Add only unique values to productsData (optional)
-    values.forEach(value => {
-      if (!productsData.some(item => item.id === value.id)) {
-        productsData.push(value);
-      }
+    const promise =  fetch('https://supersimplebackend.dev/products')
+    .then((response)=>{
+      const values=response.json();
+      return values;
+    })
+    .then((productsDetails)=>{
+      
+      productsDetails.forEach(value => {
+          if (!productsData.some(item => item.id === value.id)) {
+            productsData.push(value);
+          }
+        });
+      
     });
-   
-    
-    console.log('load products');
-    // console.log(productsData);
-    callback()
-    
-  } catch (error) {
-    console.error('Failed to load products:', error);
+    return promise;
+  }catch(error){
+    console.error('failed to load products',error);
   }
+    
 };
 
-await loadProducts(()=>{});
-
-
-// new Promise((resolve)=>{
-  //   loadProducts(()=>{
-    //     productsData;
-    //     resolve();
-    //   })
-    // });
+ await loadProductsFetch() 
     
-    
-    
-    export  function getProduct(productId){
-     
-      let matchingProduct;
-  
-  
-  // console.log(productsData.id);
+export  function getProduct(productId){
+     let matchingProduct;
   productsData.forEach((products)=>{
     if(products.id === productId){
       matchingProduct = products;
