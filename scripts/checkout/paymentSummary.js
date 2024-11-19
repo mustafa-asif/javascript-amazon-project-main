@@ -4,12 +4,12 @@ import { getProduct } from "../../data/productsData.js";
 import { FormatCurrrency } from "../util/money.js";
 
 
-export function renderPaymentSummary(){
+export  function renderPaymentSummary(){
   let productPriceCents=0;
   let shippingPriceCents=0;
 
-  cart.forEach((cartItem)=>{
-    const product=getProduct(cartItem.productId);
+  cart.forEach( (cartItem)=>{
+    const product= getProduct(cartItem.productId);
     productPriceCents +=product.priceCents * cartItem.quantity;
 
     const deliveryOption=getDelieveryOption(cartItem.delieveryOptionsId);
@@ -60,7 +60,7 @@ export function renderPaymentSummary(){
             </div>
           </div>
 
-          <button class="place-order-button button-primary">
+          <button class="place-order-button button-primary js-place-button">
             Place your order
           </button>
   `;
@@ -68,5 +68,19 @@ export function renderPaymentSummary(){
   const renderPayement=document.querySelector('.js-payment-summary');
   renderPayement.innerHTML=totalPayementSummary;
   
-
+  const placeOrder=document.querySelector('.js-place-button');
+  console.log(placeOrder);
+  placeOrder.addEventListener('click', async ()=>{
+    const response=await fetch('https://supersimplebackend.dev/orders',{
+      method : 'POST',
+      headers:{
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        cart : cart
+      })
+    });
+    const data=await response.json();
+    console.log(data);
+  });
 }

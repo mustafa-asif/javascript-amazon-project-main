@@ -9,14 +9,10 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js'
 
 let renderOrder=document.getElementById('js-render-order');
 const checkoutQuantity=document.getElementById('checkout-quantity');
-// console.log(dayjs());
-// const todaysDate=dayjs();
-// const delieveryDate=todaysDate.add(7,'day');
-// console.log(delieveryDate.format('dddd, MMMM DD'));
 
-// loadProducts();
 // render all functions
   export function  renderOrderSummaryAll() {
+    
   
   renderOrderSummary();
   DeleteItem();
@@ -28,7 +24,7 @@ const checkoutQuantity=document.getElementById('checkout-quantity');
 
 function renderOrderSummary() {
   let orderSummary='';
-    cart.forEach( (cartItem)=>{
+    cart.forEach(  (cartItem)=>{
       const productId=cartItem.productId;
       // console.log(cartItem.productId);
       // console.log(productId);

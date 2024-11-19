@@ -6,14 +6,14 @@
 
 async function loadPage(){
   try {
-    await loadProductsFetch();
+    // await loadProductsFetch();
+    renderOrderSummaryAll();
+    renderPaymentSummary();
     
   } catch (error) {
     console.log('try again later ',error);
     
   }
-  renderOrderSummaryAll();
-  renderPaymentSummary();
  
 }
 

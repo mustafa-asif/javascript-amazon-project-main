@@ -1,5 +1,5 @@
 import {AddToCart,RenderCart} from '../data/cart.js';
-import { productsData,loadProductsFetch } from '../data/productsData.js';
+import { productsData } from '../data/productsData.js';
 import { FormatCurrrency } from './util/money.js';
 
 
@@ -8,14 +8,16 @@ const cartTotalCount=document.getElementById('js-cart-quantity');
 
 // console.log(displayProducts);
 
-  await  loadProductsFetch().then(()=>{
-    RenderProductsGrid();
-  })
+    // loadProductsFetch();
+  
+  
+  function RenderProductsGrid(){
+    RenderProductsLists();
+    DisplayCartItem();
+  }
+  RenderProductsGrid();
 
- function RenderProductsGrid(){
-  RenderProductsLists();
-  DisplayCartItem();
-}
+
 function RenderProductsLists(){
   
 
