@@ -5,9 +5,16 @@
 
 
 async function loadPage(){
-  await loadProductsFetch();
+  try {
+    await loadProductsFetch();
+    
+  } catch (error) {
+    console.log('try again later ',error);
+    
+  }
   renderOrderSummaryAll();
   renderPaymentSummary();
+ 
 }
 
 loadPage();
